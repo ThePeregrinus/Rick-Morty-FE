@@ -19,15 +19,18 @@ function toNextPage() {
 }
 
 function filter() {
-  id.value = 1
-  id.name = ''
-  id.status = 'Alive'
-
+  if (isFiltered.value === true) {
+    id.value = 1
+    name.value = ''
+    status.value = 'Alive'
+  }
   isFiltered.value = !isFiltered.value
 }
 
 watch(id, () => fetchData(id))
 watch(isFiltered, () => fetchFilterData())
+watch(name, () => (isFiltered.value = false))
+watch(status, () => (isFiltered.value = false))
 
 async function fetchData() {
   heroes.value = null
